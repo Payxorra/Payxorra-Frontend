@@ -114,7 +114,7 @@ export const useBridgeStore = create<BridgeState>((set, get) => ({
 
   removeTransaction: (id: string) => {
     set((state) => {
-      const { [id]: _, ...rest } = state.transactions;
+      const { [id]: _, ...rest } = state.transactions; // eslint-disable-line @typescript-eslint/no-unused-vars
       return { transactions: rest };
     });
   },

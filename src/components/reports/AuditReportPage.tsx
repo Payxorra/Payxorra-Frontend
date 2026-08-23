@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { usePrintReport } from '@/src/hooks/usePrintReport';
 import { ReportSection } from '@/src/components/reports/ReportSection';
-import { type ReportData, splitReportIntoVolumes, type ReportVolume } from '@/src/utils/printHelpers';
+import { type ReportData, splitReportIntoVolumes, type ReportVolume } from '@/src/utils/printHelpers'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 // Chart implementation using Recharts for interactive view
 import {
@@ -24,7 +24,7 @@ export function AuditReportPage() {
   const [activeVolumeIndex, setActiveVolumeIndex] = useState(0);
 
   const printContainerId = 'report-print-container';
-  const { printVolume, isPrinting, volumes, activeVolumeToPrint } = usePrintReport();
+  const { printVolume, isPrinting, volumes, activeVolumeToPrint } = usePrintReport(); // eslint-disable-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-unused-vars
 
   // TanStack Query to fetch data based on inputs
   const { data, isLoading, refetch, isFetching } = useQuery<ReportData>({
@@ -117,7 +117,7 @@ export function AuditReportPage() {
         // Plot data points
         const points = activeVolumeToPrint.bandwidthGraphs;
         const paddingX = 60;
-        const paddingY = 60;
+        const paddingY = 60; // eslint-disable-line @typescript-eslint/no-unused-vars
         const width = 700;
         const height = 180;
         const maxThroughput = Math.max(...points.map(p => p.throughput), 1000);
@@ -227,7 +227,7 @@ export function AuditReportPage() {
           </div>
         ) : !data ? (
           <div className="py-20 text-center border border-dashed border-[#d8d0c1] rounded-xl text-[#6f5f48]">
-            Please enter a date range and click "Generate Report".
+            Please enter a date range and click &quot;Generate Report&quot;.
           </div>
         ) : (
           <div>

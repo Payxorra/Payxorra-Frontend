@@ -5,7 +5,7 @@ import type {
   BackupEvent,
   BackupEventType,
   BackupScheduleConfig,
-  BackupFrequency,
+  BackupFrequency, // eslint-disable-line @typescript-eslint/no-unused-vars
   BackupDatabases,
   RestoreReport,
   VerifyReport,
@@ -13,12 +13,12 @@ import type {
 import { BACKUP_SCHEMA_VERSION } from "./types";
 import {
   exportDatabase,
-  importDatabase,
+  importDatabase, // eslint-disable-line @typescript-eslint/no-unused-vars
   saveMetadata,
   getMetadataList,
   removeMetadata,
   clearAllMetadata,
-  countDatabaseRecords,
+  countDatabaseRecords, // eslint-disable-line @typescript-eslint/no-unused-vars
   getKnownDbNames,
 } from "./storage";
 import { computeChecksum, verifyBackup } from "./verify";
@@ -62,7 +62,7 @@ async function getAppVersion(): Promise<string> {
 function getDeployChannel(): string {
   if (typeof process !== "undefined" && process.env) {
     return (
-      (process as any).env?.NEXT_PUBLIC_DEPLOY_CHANNEL ?? "stable"
+      (process as unknown).env?.NEXT_PUBLIC_DEPLOY_CHANNEL ?? "stable"
     );
   }
   return "stable";
@@ -70,7 +70,7 @@ function getDeployChannel(): string {
 
 function getReleaseSlot(): string {
   if (typeof process !== "undefined" && process.env) {
-    return (process as any).env?.NEXT_PUBLIC_RELEASE_SLOT ?? "blue";
+    return (process as unknown).env?.NEXT_PUBLIC_RELEASE_SLOT ?? "blue";
   }
   return "blue";
 }

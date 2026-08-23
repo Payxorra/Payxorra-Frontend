@@ -17,24 +17,24 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 // Mock WebSocket
 class MockWebSocket {
   readyState = WebSocket.OPEN
-  listeners: Record<string, Function[]> = {
+  listeners: Record<string, ((...args: unknown[]) => void)[]> = {
     error: [],
     close: [],
   }
 
-  addEventListener(event: string, callback: Function) {
+  addEventListener(event: string, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = []
     }
     this.listeners[event].push(callback)
   }
 
-  removeEventListener(event: string, callback: Function) {
+  removeEventListener(event: string, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) return
     this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback)
   }
 
-  send(message: string) {
+  send(message: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
     // Mock send
   }
 
@@ -53,7 +53,7 @@ class MockWebSocket {
 
 describe('useConnectionHealth', () => {
   let ws: MockWebSocket
-  let onHealthChange: ReturnType<typeof vi.fn>
+  let onHealthChange: () => void
 
   beforeEach(() => {
     ws = new MockWebSocket()
@@ -132,7 +132,7 @@ describe('useConnectionHealth', () => {
 
     // Advance to just before expected ping
     vi.advanceTimersByTime(9990 - 10)
-    lastPingTime = Date.now()
+    lastPingTime = Date.now() // eslint-disable-line @typescript-eslint/no-unused-vars
 
     // Advance to the actual expected ping time
     vi.advanceTimersByTime(10)

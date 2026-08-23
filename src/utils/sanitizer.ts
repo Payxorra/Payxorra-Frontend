@@ -18,8 +18,8 @@ type DOMPurifyApi = typeof import('isomorphic-dompurify').default;
 const browserDOMPurify: DOMPurifyApi | null =
   typeof window === 'undefined'
     ? null
-    : (require('isomorphic-dompurify') as { default?: DOMPurifyApi } & DOMPurifyApi).default ??
-      (require('isomorphic-dompurify') as DOMPurifyApi);
+    : (await import('isomorphic-dompurify') as unknown as { default?: DOMPurifyApi } & DOMPurifyApi).default ??
+      (await import('isomorphic-dompurify') as unknown as DOMPurifyApi);
 
 // ---------------------------------------------------------------------------
 // Configuration

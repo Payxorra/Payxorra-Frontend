@@ -37,7 +37,8 @@ export function createDefaultPackageSources(): PackageSource[] {
       parse: () => {
         if (cache.deps) return { dependencies: cache.deps };
         try {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
+           
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           const pkg = require("../../package.json");
           cache.deps = parsePackageJson(pkg);
           return { dependencies: cache.deps };
@@ -142,7 +143,7 @@ export class DependencyScanner {
     try {
       const parsed = source.parse();
       deps = parsed.dependencies;
-    } catch (error) {
+    } catch (error) { // eslint-disable-line @typescript-eslint/no-unused-vars
       const durationMs = this.clock() - started;
       const report: ScanReport = {
         ok: false,

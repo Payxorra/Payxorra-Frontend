@@ -69,7 +69,7 @@ export function useVirtualList<T>(
       measuredDelta += height - estimatedRowHeight
     })
     return Math.max(0, totalCount * estimatedRowHeight + measuredDelta)
-  }, [estimatedRowHeight, totalCount, scrollState])
+  }, [estimatedRowHeight, totalCount, scrollState]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const range = useMemo(() => {
     const { scrollTop, viewportHeight } = scrollState

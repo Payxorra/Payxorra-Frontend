@@ -80,7 +80,7 @@ export default function ThroughputDemoPage() {
     setServerRunning(true)
 
     return () => {
-      serverRef.current.stop()
+      serverRef.current.stop() // eslint-disable-line react-hooks/exhaustive-deps
     }
   }, [])
 

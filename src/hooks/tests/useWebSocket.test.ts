@@ -36,7 +36,7 @@ class MockWebSocket {
     this.protocols = protocols
   }
 
-  send(data: string) {
+  send(data: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
     if (this.readyState !== MockWebSocket.OPEN) {
       throw new Error('WebSocket is not open')
     }
@@ -53,7 +53,7 @@ class MockWebSocket {
     this.onopen?.(new Event('open'))
   }
 
-  simulateMessage(data: any) {
+  simulateMessage(data: unknown) {
     this.readyState = MockWebSocket.OPEN
     this.onmessage?.(new MessageEvent('message', { data: JSON.stringify(data) }))
   }
@@ -75,16 +75,17 @@ describe('useWebSocket', () => {
     mockWs = null
 
     // Replace global WebSocket with mock
-    ;(global as any).WebSocket = class extends MockWebSocket {
+    ;(global as unknown).WebSocket = class extends MockWebSocket {
       constructor(url: string, protocols?: string | string[]) {
         super(url, protocols)
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         mockWs = this
       }
     }
   })
 
   afterEach(() => {
-    ;(global as any).WebSocket = originalWebSocket
+    ;(global as unknown).WebSocket = originalWebSocket
     vi.clearAllMocks()
   })
 
@@ -223,7 +224,7 @@ describe('useWebSocket', () => {
 
     // Simulate reconnect with new websocket
     const newMockWs = new MockWebSocket('ws://localhost:8080')
-    ;(global as any).WebSocket = class {
+    ;(global as unknown).WebSocket = class {
       constructor() {
         return newMockWs
       }

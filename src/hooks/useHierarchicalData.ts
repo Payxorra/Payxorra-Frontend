@@ -85,7 +85,7 @@ export const useHierarchicalData = (nodeList: FlatNetworkNode[]) => {
     });
 
     // Recursively convert Maps to Arrays for D3 compatibility
-    const formatChildren = (node: HierarchyRawNode): any => {
+    const formatChildren = (node: HierarchyRawNode): unknown => {
       if (node.children instanceof Map) {
         node.children = Array.from(node.children.values()).map(formatChildren);
       }

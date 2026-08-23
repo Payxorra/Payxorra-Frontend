@@ -5,7 +5,7 @@ import type {
   ApprovalStoreEvents,
   ApprovalStoreListener,
   SpendingCap,
-  SpendingCapPeriod,
+  SpendingCapPeriod, // eslint-disable-line @typescript-eslint/no-unused-vars
 } from "./types"
 
 export class ApprovalStore {

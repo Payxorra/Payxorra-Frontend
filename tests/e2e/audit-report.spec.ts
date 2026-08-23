@@ -8,8 +8,8 @@ test.describe('Audit Report PDF Generation & Print Styling', () => {
     
     // Mock window.print to prevent browser print dialog from blocking test execution
     await page.evaluate(() => {
-      (window as any).print = () => {
-        (window as any).__printCalled = true;
+      (window as unknown).print = () => {
+        (window as unknown).__printCalled = true;
       };
     });
   });
@@ -39,10 +39,10 @@ test.describe('Audit Report PDF Generation & Print Styling', () => {
 
     // Mock window.print to verify container attachment and class structure during print trigger
     await page.evaluate(() => {
-      (window as any).print = () => {
+      (window as unknown).print = () => {
         const container = document.getElementById('report-print-container');
-        (window as any).__printContainerExists = container !== null;
-        (window as any).__printHeaderConfigured = container?.querySelector('.print-header') !== null;
+        (window as unknown).__printContainerExists = container !== null;
+        (window as unknown).__printHeaderConfigured = container?.querySelector('.print-header') !== null;
       };
     });
 
@@ -50,11 +50,11 @@ test.describe('Audit Report PDF Generation & Print Styling', () => {
     await page.click('button:has-text("Print / Save as PDF")');
 
     // Wait for mock print to be asynchronously executed
-    await page.waitForFunction(() => (window as any).__printContainerExists !== undefined, { timeout: 5000 });
+    await page.waitForFunction(() => (window as unknown).__printContainerExists !== undefined, { timeout: 5000 });
 
     // Retrieve assertion results
-    const containerExists = await page.evaluate(() => (window as any).__printContainerExists);
-    const headerConfigured = await page.evaluate(() => (window as any).__printHeaderConfigured);
+    const containerExists = await page.evaluate(() => (window as unknown).__printContainerExists);
+    const headerConfigured = await page.evaluate(() => (window as unknown).__printHeaderConfigured);
 
     expect(containerExists).toBe(true);
     expect(headerConfigured).toBe(true);
@@ -87,8 +87,8 @@ test.describe('Audit Report PDF Generation & Print Styling', () => {
 
     // Override the mock to capture the HTML structure at print execution time
     await page.evaluate(() => {
-      (window as any).print = () => {
-        (window as any).__printHtml = document.getElementById('report-print-container')?.innerHTML;
+      (window as unknown).print = () => {
+        (window as unknown).__printHtml = document.getElementById('report-print-container')?.innerHTML;
       };
     });
 
@@ -96,10 +96,10 @@ test.describe('Audit Report PDF Generation & Print Styling', () => {
     await page.click('button:has-text("Print / Save as PDF")');
 
     // Wait for the mock print function to be asynchronously executed and populate __printHtml
-    await page.waitForFunction(() => (window as any).__printHtml !== undefined, { timeout: 5000 });
+    await page.waitForFunction(() => (window as unknown).__printHtml !== undefined, { timeout: 5000 });
 
     // Retrieve the captured print-mode HTML
-    const printHtml = await page.evaluate(() => (window as any).__printHtml);
+    const printHtml = await page.evaluate(() => (window as unknown).__printHtml);
     
     // Assert the canvas element is replaced with an img tag containing base64 data
     expect(printHtml).toContain('<img');

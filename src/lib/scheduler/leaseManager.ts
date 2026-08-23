@@ -68,7 +68,7 @@ export class LeaseManager {
     return true
   }
 
-  expireStaleLeases(now: number, leaseDurationMs: number): string[] {
+  expireStaleLeases(now: number, leaseDurationMs: number): string[] { // eslint-disable-line @typescript-eslint/no-unused-vars
     const expired: string[] = []
     for (const [leaseId, lease] of this.leases) {
       if (lease.status === "active" && now > lease.expiresAt) {

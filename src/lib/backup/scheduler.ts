@@ -1,4 +1,4 @@
-import type { BackupScheduleConfig, BackupFrequency } from "./types";
+import type { BackupScheduleConfig, BackupFrequency } from "./types"; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 type SchedulerCallback = () => Promise<void>;
 

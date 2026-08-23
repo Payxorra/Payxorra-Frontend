@@ -24,7 +24,7 @@ export default function ProvisioningConsole() {
     useEffect(() => {
       if (isConnected && notifyChar) {
        const handleNotification = async (event: Event) => {
-         const value = (event.target as any as BluetoothRemoteGATTCharacteristic).value;
+         const value = (event.target as unknown as BluetoothRemoteGATTCharacteristic).value;
          if (value) {
            const result = decodeResponse(value);
            setVerificationResult(result);

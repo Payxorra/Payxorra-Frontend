@@ -100,7 +100,7 @@ export function useConnectionHealth(config: HealthCheckConfig) {
 
       performHealthCheck(currentGeneration)
     }, pingIntervalMs)
-  }, [pingIntervalMs, ws])
+  }, [pingIntervalMs, ws]) // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
    * Perform the actual health check.
@@ -187,7 +187,7 @@ export function useConnectionHealth(config: HealthCheckConfig) {
         }
       }
     },
-    [ws, pongTimeoutMs, onHealthChange]
+    [ws, pongTimeoutMs, onHealthChange] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   /**

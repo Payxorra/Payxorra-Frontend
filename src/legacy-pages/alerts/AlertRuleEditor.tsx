@@ -352,7 +352,7 @@ export default function AlertRuleEditor({
                 id="alert-rule-operator"
                 className="alert-rule-editor__select"
                 value={operator}
-                onChange={(e) => setOperator(e.target.value as any)}
+                onChange={(e) => setOperator(e.target.value as 'gt' | 'gte' | 'lt' | 'lte' | 'eq')}
               >
                 {OPERATORS.map((op) => (
                   <option key={op.value} value={op.value}>

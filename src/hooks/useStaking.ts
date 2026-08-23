@@ -91,7 +91,7 @@ export function useStaking(walletAddress?: string) {
     staleTime: 60_000,
   });
 
-  const approve = useCallback(async (_amount: bigint): Promise<boolean> => {
+  const approve = useCallback(async (_amount: bigint): Promise<boolean> => { // eslint-disable-line @typescript-eslint/no-unused-vars
     setIsSubmitting(true);
     try {
       await new Promise((r) => setTimeout(r, 1000));
@@ -102,7 +102,7 @@ export function useStaking(walletAddress?: string) {
   }, []);
 
   const stake = useCallback(
-    async (_amount: bigint): Promise<boolean> => {
+    async (_amount: bigint): Promise<boolean> => { // eslint-disable-line @typescript-eslint/no-unused-vars
       setIsSubmitting(true);
       try {
         await new Promise((r) => setTimeout(r, 1500));

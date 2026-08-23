@@ -13,7 +13,7 @@ function toBase64Url(bytes: Uint8Array): string {
 }
 
 function fromBase64Url(value: string): Uint8Array {
-  return new Uint8Array(Buffer.from(value, "base64url")) as Uint8Array<ArrayBuffer>;
+  return new Uint8Array(Buffer.from(value, "base64url"));
 }
 
 async function deriveKey(serverSecret: string): Promise<CryptoKey> {
@@ -23,7 +23,7 @@ async function deriveKey(serverSecret: string): Promise<CryptoKey> {
 
 export async function generateToken(payload: SharePayload, serverSecret: string): Promise<string> {
   const identifier = crypto.getRandomValues(new Uint8Array(32));
-  const nonce = crypto.getRandomValues(new Uint8Array(12)) as Uint8Array<ArrayBuffer>;
+  const nonce = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(serverSecret);
   const ciphertext = await crypto.subtle.encrypt(
     { name: "AES-GCM", iv: nonce },
@@ -31,7 +31,7 @@ export async function generateToken(payload: SharePayload, serverSecret: string)
     encoder.encode(JSON.stringify(payload)),
   );
 
-  return [toBase64Url(identifier), toBase64Url(nonce), toBase64Url(new Uint8Array(ciphertext))].join(".");
+  return [toBase64Url(identifier), toBase64Url(nonce), toBase64Url(new Uint8Array(ciphertext as ArrayBuffer))].join(".");
 }
 
 export async function parseToken(token: string, serverSecret: string): Promise<SharePayload | null> {
@@ -41,9 +41,9 @@ export async function parseToken(token: string, serverSecret: string): Promise<S
 
     const key = await deriveKey(serverSecret);
     const plaintext = await crypto.subtle.decrypt(
-      { name: "AES-GCM", iv: fromBase64Url(nonce) as any },
+      { name: "AES-GCM", iv: fromBase64Url(nonce) as unknown as BufferSource },
       key,
-      fromBase64Url(ciphertext) as any,
+      fromBase64Url(ciphertext) as unknown as BufferSource,
     );
     const payload = JSON.parse(decoder.decode(plaintext)) as SharePayload;
     if (

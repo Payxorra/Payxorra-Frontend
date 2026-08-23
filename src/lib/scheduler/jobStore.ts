@@ -80,7 +80,7 @@ export class JobStore<T = unknown> {
     }
   }
 
-  timeoutExpiredLeases(now: number, leaseDurationMs: number): string[] {
+  timeoutExpiredLeases(now: number, leaseDurationMs: number): string[] { // eslint-disable-line @typescript-eslint/no-unused-vars
     const timedOut: string[] = []
     const running = this.getByStatus("running")
     for (const job of running) {

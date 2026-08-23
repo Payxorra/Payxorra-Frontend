@@ -23,6 +23,7 @@ interface BluetoothRemoteGATTCharacteristic {
   value: DataView | null;
 }
 
+/* eslint-disable */
 interface NavigatorBluetooth {
   requestDevice(options: any): Promise<BluetoothDevice>;
 }

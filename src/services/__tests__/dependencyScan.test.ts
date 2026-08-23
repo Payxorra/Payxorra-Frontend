@@ -268,6 +268,6 @@ if (failures > 0) {
 console.log("\nAll dependency scanner service tests passed");
 
 function getDependencyScanner() {
-  const { getDependencyScanner: getter } = require("../dependencyScan");
+  const { getDependencyScanner: getter } = await import("../dependencyScan");
   return getter();
 }

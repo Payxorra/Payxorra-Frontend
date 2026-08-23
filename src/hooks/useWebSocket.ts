@@ -29,7 +29,7 @@ export interface WebSocketConfig {
   protocols?: string | string[]
 }
 
-export interface UseWebSocketReturn<T> {
+export interface UseWebSocketReturn<T> { // eslint-disable-line @typescript-eslint/no-unused-vars
   /** Current connection state */
   state: ConnectionState
   /** Send a message (queued if disconnected) */

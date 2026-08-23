@@ -160,7 +160,7 @@ export function ThroughputChart({
   // Get chart data from sliding window
   const chartData = useMemo(() => {
     return slidingWindowRef.current.getAll()
-  }, [throttledMessages]) // Re-compute when throttled data updates
+  }, [throttledMessages]) // Re-compute when throttled data updates // eslint-disable-line react-hooks/exhaustive-deps
 
   // Format tooltip
   const formatTooltip = useCallback((value: unknown) => {

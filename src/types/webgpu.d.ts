@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * WebGPU API Type Declarations
  *

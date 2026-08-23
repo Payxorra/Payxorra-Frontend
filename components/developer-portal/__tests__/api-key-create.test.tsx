@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react'; // eslint-disable-line @typescript-eslint/no-unused-vars
 import userEvent from '@testing-library/user-event';
 import { ApiKeyCreate } from '../api-key-create';
 
@@ -8,10 +8,10 @@ jest.mock('@/components/ui/modal', () => ({
   Modal: ({ children, isOpen }: { children: React.ReactNode, isOpen: boolean }) => isOpen ? <div data-testid="modal">{children}</div> : null
 }));
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>
+  Button: ({ children, ...props }: unknown) => <button {...props}>{children}</button>
 }));
 jest.mock('@/components/ui/input', () => ({
-  Input: (props: any) => <input data-testid="input" {...props} />
+  Input: (props: unknown) => <input data-testid="input" {...props} />
 }));
 
 describe('ApiKeyCreate', () => {

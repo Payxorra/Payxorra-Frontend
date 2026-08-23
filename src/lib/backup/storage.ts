@@ -68,7 +68,7 @@ interface LuminaOfflineDB extends DBSchema {
 
 const DB_CONFIGS: Record<
   string,
-  { version: number; stores: string[]; upgrade?: (db: IDBPDatabase<any>) => void }
+  { version: number; stores: string[]; upgrade?: (db: IDBPDatabase<unknown>) => void }
 > = {
   "lumina-field-db": {
     version: 2,
@@ -216,7 +216,7 @@ export async function exportDatabase(
   const config = DB_CONFIGS[dbName];
   if (!config) return {};
 
-  let db: IDBPDatabase<any> | null = null;
+  let db: IDBPDatabase<unknown> | null = null;
   try {
     if (dbName === "lumina-field-db") {
       db = await getFieldDbPromise();
@@ -252,7 +252,7 @@ export async function importStore(
   records: unknown[],
   clear?: boolean,
 ): Promise<number> {
-  let db: IDBPDatabase<any> | null = null;
+  let db: IDBPDatabase<unknown> | null = null;
   try {
     if (dbName === "lumina-field-db") {
       db = await getFieldDbPromise();
@@ -312,12 +312,12 @@ export async function importDatabase(
 export async function countDatabaseRecords(
   dbName: string,
 ): Promise<number> {
-  let db: IDBPDatabase<any> | null = null;
+  let db: IDBPDatabase<unknown> | null = null;
   try {
     if (dbName === "lumina-field-db") {
-      db = await getFieldDbPromise();
+      db = (await getFieldDbPromise()) as unknown as IDBPDatabase<unknown>;
     } else if (dbName === "lumina-offline-queue") {
-      db = await getOfflineDbPromise();
+      db = (await getOfflineDbPromise()) as unknown as IDBPDatabase<unknown>;
     }
     if (!db) return 0;
 
@@ -345,12 +345,12 @@ export async function clearAllDatabases(): Promise<void> {
   for (const dbName of KNOWN_DB_NAMES) {
     const config = DB_CONFIGS[dbName];
     if (!config) continue;
-    let db: IDBPDatabase<any> | null = null;
+    let db: IDBPDatabase<unknown> | null = null;
     try {
       if (dbName === "lumina-field-db") {
-        db = await getFieldDbPromise();
+        db = (await getFieldDbPromise()) as unknown as IDBPDatabase<unknown>;
       } else if (dbName === "lumina-offline-queue") {
-        db = await getOfflineDbPromise();
+        db = (await getOfflineDbPromise()) as unknown as IDBPDatabase<unknown>;
       }
       if (!db) continue;
       const tx = db.transaction(config.stores, "readwrite");

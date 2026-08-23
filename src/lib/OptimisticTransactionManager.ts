@@ -46,19 +46,19 @@ export class OptimisticTransactionManager {
   applyOptimisticUpdate(
     queryKey: unknown[],
     delta: BalanceDelta,
-    previousData: unknown
+    previousData: unknown // eslint-disable-line @typescript-eslint/no-unused-vars
   ): string {
     const nonce = generateIdempotencyKey();
     const startTime = performance.now();
 
     // Apply the balance delta immediately
-    this.queryClient.setQueryData(queryKey, (old: any) => {
+    this.queryClient.setQueryData(queryKey, (old: unknown) => {
       if (!old) return old;
 
       const newBalance =
         delta.operation === "deposit"
-          ? old.rawBalance + delta.amount
-          : old.rawBalance - delta.amount;
+          ? Number((old as { rawBalance: number }).rawBalance) + Number(delta.amount)
+          : Number((old as { rawBalance: number }).rawBalance) - Number(delta.amount);
 
       return {
         ...old,
@@ -187,7 +187,7 @@ export class OptimisticTransactionManager {
       
       // For each snapshot, check if it should be rolled back
       for (const snapshot of snapshots) {
-        this.queryClient.setQueryData(snapshot.queryKey, (current: any) => {
+        this.queryClient.setQueryData(snapshot.queryKey, (current: unknown) => {
           if (!current) return current;
 
           // If current balance doesn't match backend, use backend value

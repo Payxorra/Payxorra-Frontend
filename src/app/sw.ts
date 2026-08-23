@@ -13,7 +13,7 @@ interface FilePickerAcceptType {
   accept: Record<string, string[]>;
 }
 
-interface SaveFilePickerOptions {
+interface SaveFilePickerOptions { // eslint-disable-line @typescript-eslint/no-unused-vars
   suggestedName?: string;
   types?: FilePickerAcceptType[];
   excludeAcceptAllOption?: boolean;
@@ -21,7 +21,7 @@ interface SaveFilePickerOptions {
   startIn?: FileSystemHandle | string;
 }
 
-interface FileSystemHandlePermissionDescriptor {
+interface FileSystemHandlePermissionDescriptor { // eslint-disable-line @typescript-eslint/no-unused-vars
   name: 'file' | 'directory';
   mode?: 'read' | 'readwrite';
 }
@@ -31,13 +31,13 @@ interface FileSystemCreateWritableOptions {
 }
 
 interface FileSystemWritableFileStream extends WritableStream {
-  write(data: any): Promise<void>;
+  write(data: unknown): Promise<void>;
   seek(position: number): Promise<void>;
   truncate(size: number): Promise<void>;
   close(): Promise<void>;
 }
 
-interface FileSystemFileHandle extends FileSystemHandle {
+interface FileSystemFileHandle extends FileSystemHandle { // eslint-disable-line @typescript-eslint/no-unused-vars
   getFile(): Promise<File>;
   createWritable(options?: FileSystemCreateWritableOptions): Promise<FileSystemWritableFileStream>;
 }

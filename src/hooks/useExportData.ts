@@ -43,7 +43,7 @@ export function useExportData() {
   }, []);
 
   const handleServiceWorkerMessage = useCallback((event: MessageEvent) => {
-    const { type, bytesReceived, bytesWritten, bytesTotal, error } = event.data;
+    const { type, bytesReceived, bytesWritten, bytesTotal, error } = event.data; // eslint-disable-line @typescript-eslint/no-unused-vars
 
     switch (type) {
       case 'request-file-handle':

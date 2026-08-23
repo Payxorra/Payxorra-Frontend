@@ -34,13 +34,16 @@ const eslintConfig = defineConfig([
       "react-hooks/set-state-in-effect": "off",
       // The WebGPU ambient declarations and test helpers intentionally use
       // broad platform-shaped types that are impractical to narrow here.
-      "@typescript-eslint/no-empty-object-type": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-require-imports": "off",
-      "no-var": "off",
-      "prefer-const": "off",
+      // Rules removed to enforce strict mode across the codebase.
     },
   },
+  {
+    files: ["**/*.d.ts"],
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  }
 ]);
 
 export default eslintConfig;

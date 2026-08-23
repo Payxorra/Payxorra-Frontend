@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { configureTreeLayout } from "../../lib/d3/treeLayout";
 
 interface TreeViewProps {
-  data: d3.HierarchyNode<any>;
+  data: d3.HierarchyNode<unknown>;
   width?: number;
   height?: number;
 }
@@ -40,7 +40,7 @@ export const TreeView: React.FC<TreeViewProps> = ({
     let i = 0;
 
     // Initialize root position coordinates
-    const root = data as any;
+    const root = data as unknown;
     root.x0 = height / 2;
     root.y0 = 0;
 
@@ -49,7 +49,7 @@ export const TreeView: React.FC<TreeViewProps> = ({
       root.children.forEach(collapseSubtree);
     }
 
-    function collapseSubtree(d: any) {
+    function collapseSubtree(d: unknown) {
       if (d.children) {
         d._children = d.children;
         d._children.forEach(collapseSubtree);
@@ -70,20 +70,20 @@ export const TreeView: React.FC<TreeViewProps> = ({
     // Initial Tree Render Call
     update(root);
 
-    function update(source: any) {
+    function update(source: unknown) {
       const treeData = treeLayout(root);
       const nodes = treeData.descendants();
       const links = treeData.links();
 
       // Enforce normalized tree level depths
-      nodes.forEach((d: any) => {
+      nodes.forEach((d: unknown) => {
         d.y = d.depth * 180;
       });
 
       // --- Node Management ---
       const node = gContainer
         .selectAll("g.node")
-        .data(nodes, (d: any) => d.id || (d.id = ++i));
+        .data(nodes, (d: unknown) => d.id || (d.id = ++i));
 
       // Enter phase: Instantiate missing nodes at parent's previous position
       const nodeEnter = node
@@ -91,7 +91,7 @@ export const TreeView: React.FC<TreeViewProps> = ({
         .append("g")
         .attr("class", "node")
         .attr("transform", () => `translate(${source.y0},${source.x0})`)
-        .on("click", (event, d: any) => {
+        .on("click", (event, d: unknown) => {
           if (d.children) {
             d._children = d.children;
             d.children = null;
@@ -108,17 +108,17 @@ export const TreeView: React.FC<TreeViewProps> = ({
         .attr("r", 1e-6)
         .style(
           "fill",
-          (d: any) => resolveStatusColor(d.data.status),
+          (d: unknown) => resolveStatusColor(d.data.status),
         );
 
       nodeEnter
         .append("text")
         .attr("dy", ".35em")
-        .attr("x", (d: any) => (d.children || d._children ? -13 : 13))
-        .attr("text-anchor", (d: any) =>
+        .attr("x", (d: unknown) => (d.children || d._children ? -13 : 13))
+        .attr("text-anchor", (d: unknown) =>
           d.children || d._children ? "end" : "start",
         )
-        .text((d: any) => d.data.name)
+        .text((d: unknown) => d.data.name)
         .style("fill-opacity", 1e-6)
         .style("font-size", "12px")
         .style("user-select", "none")
@@ -126,18 +126,18 @@ export const TreeView: React.FC<TreeViewProps> = ({
 
       // Update phase: Smoothly transition nodes to their newly calculated positions
       const nodeUpdate = node
-        .merge(nodeEnter as any)
+        .merge(nodeEnter as unknown)
         .transition()
         .duration(400)
         .ease(d3.easeCubicInOut)
-        .attr("transform", (d: any) => `translate(${d.y},${d.x})`);
+        .attr("transform", (d: unknown) => `translate(${d.y},${d.x})`);
 
       nodeUpdate
         .select("circle")
         .attr("r", 7)
         .style(
           "fill",
-          (d: any) => resolveStatusColor(d.data.status),
+          (d: unknown) => resolveStatusColor(d.data.status),
         )
         .style("stroke", () => getThemeColor('--color-surface'))
         .style("stroke-width", "2px");
@@ -151,7 +151,7 @@ export const TreeView: React.FC<TreeViewProps> = ({
         .duration(200)
         .style(
           "fill",
-          (d: any) => resolveStatusColor(d.data.status),
+          (d: unknown) => resolveStatusColor(d.data.status),
         );
 
       // Exit phase: Transition departing nodes back to the clicked parent node
@@ -169,13 +169,13 @@ export const TreeView: React.FC<TreeViewProps> = ({
       // --- Link Management ---
       const link = gContainer
         .selectAll("path.link")
-        .data(links, (d: any) => d.target.id);
+        .data(links, (d: unknown) => d.target.id);
 
       // Generating clean standard horizontal curved path connections
       const diagonal = d3
         .linkHorizontal()
-        .x((d: any) => d.y)
-        .y((d: any) => d.x);
+        .x((d: unknown) => d.y)
+        .y((d: unknown) => d.x);
 
       // Enter phase: Generate links collapsing into parent node
       const linkEnter = link
@@ -184,7 +184,7 @@ export const TreeView: React.FC<TreeViewProps> = ({
         .attr("class", "link")
         .attr("d", () => {
           const o = { x: source.x0, y: source.y0 };
-          return diagonal({ source: o, target: o } as any);
+          return diagonal({ source: o, target: o } as unknown);
         })
         .style("fill", "none")
         .style("stroke", () => getThemeColor('--color-border'))
@@ -192,11 +192,11 @@ export const TreeView: React.FC<TreeViewProps> = ({
 
       // Update phase: Standard view transitions for expanding paths
       link
-        .merge(linkEnter as any)
+        .merge(linkEnter as unknown)
         .transition()
         .duration(400)
         .ease(d3.easeCubicInOut)
-        .attr("d", diagonal as any);
+        .attr("d", diagonal as unknown);
 
       // Exit phase: Contract links back down into structural parent node
       link
@@ -206,12 +206,12 @@ export const TreeView: React.FC<TreeViewProps> = ({
         .ease(d3.easeCubicInOut)
         .attr("d", () => {
           const o = { x: source.x, y: source.y };
-          return diagonal({ source: o, target: o } as any);
+          return diagonal({ source: o, target: o } as unknown);
         })
         .remove();
 
       // Cache structural positional history for subsequent animation runs
-      nodes.forEach((d: any) => {
+      nodes.forEach((d: unknown) => {
         d.x0 = d.x;
         d.y0 = d.y;
       });

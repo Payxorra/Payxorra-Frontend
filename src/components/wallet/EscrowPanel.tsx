@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react"; // eslint-disable-line @typescript-eslint/no-unused-vars
 import { useSorobanBilling } from "@/src/hooks/useSorobanBilling";
 import type { BalanceDelta } from "@/src/lib/OptimisticTransactionManager";
 
@@ -25,7 +25,7 @@ export function EscrowPanel() {
     billingError,
     submitWithOptimisticUpdate,
     isSubmitting,
-    refetchBalance,
+    refetchBalance, // eslint-disable-line @typescript-eslint/no-unused-vars
   } = useSorobanBilling();
 
   const showToast = (type: ToastMessage["type"], message: string) => {

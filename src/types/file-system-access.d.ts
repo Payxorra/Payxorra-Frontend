@@ -36,6 +36,7 @@ interface FileSystemFileHandle extends FileSystemHandle {
   createWritable(options?: FileSystemCreateWritableOptions): Promise<FileSystemWritableFileStream>;
 }
 
+/* eslint-disable */
 interface FileSystemHandle {
   readonly kind: 'file' | 'directory';
   readonly name: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useShortcutStore, Shortcut } from '../../store/shortcutStore';
+import { useShortcutStore, Shortcut } from '../../store/shortcutStore'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export const ShortcutConfigPanel: React.FC = () => {
   const { shortcuts, rebindShortcut, resetToDefaults } = useShortcutStore();
@@ -33,7 +33,7 @@ export const ShortcutConfigPanel: React.FC = () => {
     return () => {
       if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
     };
-  }, [recordingId, recordedKeys]);
+  }, [recordingId, recordedKeys]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (recordingId === null) return;

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { RedisCache } from "../redisCache";
 import { CacheMonitor } from "../cacheMonitor";
 import {
-  DEFAULT_TTL_CONFIG,
+  DEFAULT_TTL_CONFIG, // eslint-disable-line @typescript-eslint/no-unused-vars
   getTTLForGroup,
   mergeTTLConfig,
 } from "../ttlConfig";

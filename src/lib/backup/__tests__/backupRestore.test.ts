@@ -1,11 +1,11 @@
 import "fake-indexeddb/auto";
 import assert from "node:assert/strict";
 import {
-  BackupRestoreManager,
+  BackupRestoreManager, // eslint-disable-line @typescript-eslint/no-unused-vars
   resetBackupRestoreManagerForTests,
   getBackupRestoreManager,
   BACKUP_SCHEMA_VERSION,
-  PERFORMANCE_BUDGET_MS,
+  PERFORMANCE_BUDGET_MS, // eslint-disable-line @typescript-eslint/no-unused-vars
 } from "../index";
 import {
   validateManifest,
@@ -16,7 +16,7 @@ import {
 } from "../verify";
 import {
   exportDatabase,
-  importDatabase,
+  importDatabase, // eslint-disable-line @typescript-eslint/no-unused-vars
   saveMetadata,
   getMetadataList,
   removeMetadata,
@@ -97,28 +97,28 @@ async function runVerifyTests() {
 
   await test("validateManifest rejects missing version", async () => {
     const backup = makeMinimalBackup();
-    (backup.manifest as any).version = undefined;
+    (backup.manifest as unknown).version = undefined;
     const errors = validateManifest(backup.manifest);
     assert.ok(errors.some((e) => e.includes("version")));
   });
 
   await test("validateManifest rejects invalid createdAt", async () => {
     const backup = makeMinimalBackup();
-    (backup.manifest as any).createdAt = "not-a-date";
+    (backup.manifest as unknown).createdAt = "not-a-date";
     const errors = validateManifest(backup.manifest);
     assert.ok(errors.some((e) => e.includes("createdAt")));
   });
 
   await test("validateManifest rejects schema version mismatch", async () => {
     const backup = makeMinimalBackup();
-    (backup.manifest as any).schemaVersion = 999;
+    (backup.manifest as unknown).schemaVersion = 999;
     const errors = validateManifest(backup.manifest);
     assert.ok(errors.some((e) => e.includes("schemaVersion")));
   });
 
   await test("validateManifest rejects missing checksum", async () => {
     const backup = makeMinimalBackup();
-    (backup.manifest as any).checksum = "";
+    (backup.manifest as unknown).checksum = "";
     const errors = validateManifest(backup.manifest);
     assert.ok(errors.some((e) => e.includes("checksum")));
   });
@@ -375,7 +375,7 @@ async function runRestoreTestTests() {
 
     const exported = await exportDatabase("lumina-field-db");
     assert.equal(exported.inspectionRecords.length, 1);
-    assert.equal((exported.inspectionRecords[0] as any).nodeId, "n1");
+    assert.equal((exported.inspectionRecords[0] as unknown).nodeId, "n1");
   });
 
   await test("rollbackRestore restores original state", async () => {
@@ -406,7 +406,7 @@ async function runRestoreTestTests() {
 
     const exported = await exportDatabase("lumina-field-db");
     assert.equal(exported.inspectionRecords.length, 1);
-    assert.equal((exported.inspectionRecords[0] as any).nodeId, "original");
+    assert.equal((exported.inspectionRecords[0] as unknown).nodeId, "original");
   });
 }
 
@@ -538,7 +538,7 @@ async function runManagerTests() {
   await test("subscribe receives backup-created event", async () => {
     resetBackupRestoreManagerForTests();
     const manager = getBackupRestoreManager();
-    const events: any[] = [];
+    const events: unknown[] = [];
     const unsub = manager.subscribe((event) => events.push(event));
     await manager.createBackup();
     assert.ok(events.length >= 1);
@@ -549,7 +549,7 @@ async function runManagerTests() {
   await test("subscribe receives verify-failed event", async () => {
     resetBackupRestoreManagerForTests();
     const manager = getBackupRestoreManager();
-    const events: any[] = [];
+    const events: unknown[] = [];
     const unsub = manager.subscribe((event) => events.push(event));
 
     const badBackup = makeSampleBackupFile("bad-checksum");

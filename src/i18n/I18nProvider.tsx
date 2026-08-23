@@ -62,8 +62,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     return () => {
       mountedRef.current = false;
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const loadLocale = useCallback(async (loc: Locale) => {
     const cached = cacheRef.current.get(loc);
     if (cached) {

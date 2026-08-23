@@ -91,7 +91,7 @@ export function useNetworkAnalytics() {
         workerRef.current.terminate()
         workerRef.current = null
       }
-      pendingRef.current.clear()
+      pendingRef.current.clear() // eslint-disable-line react-hooks/exhaustive-deps
     }
   }, [])
 

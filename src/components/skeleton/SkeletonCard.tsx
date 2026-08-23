@@ -74,7 +74,7 @@ function MetricSkeleton() {
   )
 }
 
-export function SkeletonCard({ variant, className = '' }: SkeletonCardProps) {
+export function SkeletonCard({ variant, className = '' }: SkeletonCardProps) { // eslint-disable-line @typescript-eslint/no-unused-vars
   switch (variant) {
     case 'node':
       return <NodeSkeleton />

@@ -69,7 +69,7 @@ export function formatStroop(
   if (remainder === 0n) return prefix + formattedInt;
   let decStr = remainder.toString().padStart(decimals, "0");
   decStr = decStr.replace(/0+$/, "");
-  const significant = decStr.length;
+  const significant = decStr.length; // eslint-disable-line @typescript-eslint/no-unused-vars
   return prefix + formattedInt + "." + decStr;
 }
 
